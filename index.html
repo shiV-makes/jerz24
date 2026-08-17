@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>JERZ24 // ARCHIVE KITS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --bg: #05070c;
+      --bg-soft: #090d16;
+      --card: rgba(13, 17, 26, 0.78);
+
+      --white: #ffffff;
+      --text: #f1f5f9;
+      --muted: #64748b;
+
+      --cyan: #00f0ff;
+      --pink: #ff0055;
+
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(0, 240, 255, 0.4);
+
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Space Grotesk", sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* =========================================
+       BACKGROUND
+    ========================================= */
+
+    .ambient-glow {
+      position: fixed;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(10px);
+    }
+
+    .glow-top {
+      width: 900px;
+      height: 500px;
+      top: -300px;
+      left: 50%;
+      transform: translateX(-50%);
+      background:
+        radial-gradient(
+          ellipse,
+          rgba(0, 240, 255, 0.13) 0%,
+          rgba(0, 240, 255, 0.03) 45%,
+          transparent 72%
+        );
+    }
+
+    .glow-bottom {
+      width: 600px;
+      height: 600px;
+      right: -250px;
+      bottom: -300px;
+      background:
+        radial-gradient(
+          circle,
+          rgba(255, 0, 85, 0.09) 0%,
+          transparent 70%
+        );
+    }
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+
+      padding: 16px 24px;
+
+      background: rgba(5, 7, 12, 0.88);
+      border-bottom: 1px solid var(--border);
+
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      color: white;
+      text-decoration: none;
+
+      flex-shrink: 0;
+    }
+
+    .logo {
+      position: relative;
+
+      font-family: "Syne", sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1;
+    }
+
+    .logo::after {
+      content: "";
+
+      position: absolute;
+      width: 6px;
+      height: 6px;
+
+      right: -9px;
+      bottom: 2px;
+
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+    }
+
+    .brand-tag {
+      padding: 4px 8px;
+
+      color: var(--cyan);
+
+      font-family: "Space Mono", monospace;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 1.3px;
+
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 5px;
+
+      background: rgba(0, 240, 255, 0.04);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 9px;
+
+      min-width: 0;
+    }
+
+    .search {
+      width: 200px;
+
+      padding: 10px 13px;
+
+      color: var(--text);
+      background: rgba(18, 24, 38, 0.9);
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      outline: none;
+
+      font-size: 0.8rem;
+      font-weight: 600;
+
+      transition: 0.2s ease;
+    }
+
+    .search::placeholder {
+      color: var(--muted);
+    }
+
+    .search:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 14px rgba(0, 240, 255, 0.15);
+    }
+
+    .category {
+      min-width: 150px;
+
+      padding: 10px 13px;
+
+      color: var(--text);
+      background: rgba(18, 24, 38, 0.9);
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      outline: none;
+
+      font-size: 0.8rem;
+      font-weight: 600;
+
+      cursor: pointer;
+    }
+
+    .category:hover {
+      border-color: var(--cyan);
+    }
+
+    .cart-button {
+      padding: 10px 15px;
+
+      color: #000;
+      background: #fff;
+
+      border: 0;
+      border-radius: 8px;
+
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+
+      white-space: nowrap;
+
+      transition: 0.2s ease;
+    }
+
+    .cart-button:hover {
+      background: var(--cyan);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* =========================================
+       MAIN
+    ========================================= */
+
+    .container {
+      width: min(1400px, calc(100% - 32px));
+      margin: 28px auto 60px;
+    }
+
+    .top-line {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      margin-bottom: 20px;
+    }
+
+    .collection-title {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+
+    .collection-subtitle {
+      margin-top: 5px;
+
+      color: var(--muted);
+
+      font-family: "Space Mono", monospace;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .product-count {
+      color: var(--muted);
+
+      font-family: "Space Mono", monospace;
+      font-size: 0.68rem;
+    }
+
+    /* =========================================
+       PRODUCT GRID
+    ========================================= */
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(240px, 1fr)
+      );
+
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+
+      display: flex;
+      flex-direction: column;
+
+      overflow: hidden;
+
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+
+      transition:
+        transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+
+      border-color: var(--border-hover);
+
+      box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.65),
+        0 0 20px rgba(0, 240, 255, 0.1);
+    }
+
+    /* =========================================
+       IMAGE
+    ========================================= */
+
+    .image-wrap {
+      position: relative;
+
+      width: 100%;
+      height: 285px;
+
+      overflow: hidden;
+
+      background:
+        radial-gradient(
+          circle at center,
+          #121927 0%,
+          #090d16 65%,
+          #070a10 100%
+        );
+    }
+
+    .image-wrap::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      pointer-events: none;
+
+      background:
+        linear-gradient(
+          to bottom,
+          transparent 60%,
+          rgba(5, 7, 12, 0.35)
+        );
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+
+      display: block;
+
+      object-fit: contain;
+
+      padding: 8px;
+
+      transition:
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        filter 0.3s ease;
+    }
+
+    .card:hover .product-image {
+      transform: scale(1.045);
+    }
+
+    .code-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 3;
+
+      padding: 5px 8px;
+
+      color: var(--cyan);
+
+      background: rgba(5, 7, 12, 0.86);
+
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+
+      backdrop-filter: blur(10px);
+
+      font-family: "Space Mono", monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
+    .category-badge {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      z-index: 3;
+
+      padding: 5px 8px;
+
+      color: rgba(255,255,255,0.75);
+
+      background: rgba(5, 7, 12, 0.75);
+
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px;
+
+      backdrop-filter: blur(10px);
+
+      font-family: "Space Mono", monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* =========================================
+       CARD CONTENT
+    ========================================= */
+
+    .card-body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+
+      padding: 15px;
+    }
+
+    .product-name {
+      min-height: 44px;
+
+      color: white;
+
+      font-family: "Syne", sans-serif;
+      font-size: 0.96rem;
+      font-weight: 700;
+
+      line-height: 1.35;
+    }
+
+    .card-bottom {
+      margin-top: auto;
+      padding-top: 13px;
+    }
+
+    .price {
+      margin-bottom: 11px;
+
+      color: var(--cyan);
+
+      font-family: "Space Mono", monospace;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .add-button {
+      width: 100%;
+
+      padding: 11px;
+
+      color: var(--text);
+      background: transparent;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      font-size: 0.73rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+
+      transition: 0.2s ease;
+    }
+
+    .add-button:hover {
+      color: #000;
+      background: var(--cyan);
+      border-color: var(--cyan);
+
+      box-shadow: 0 0 16px rgba(0, 240, 255, 0.3);
+    }
+
+    .add-button:active {
+      transform: scale(0.98);
+    }
+
+    /* =========================================
+       EMPTY STATE
+    ========================================= */
+
+    .empty {
+      grid-column: 1 / -1;
+
+      padding: 80px 20px;
+
+      text-align: center;
+
+      color: var(--muted);
+
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+
+    .empty strong {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: white;
+
+      font-family: "Syne", sans-serif;
+      font-size: 1.2rem;
+    }
+
+    /* =========================================
+       CART MODAL
+    ========================================= */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+
+      display: none;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 18px;
+
+      background: rgba(0, 0, 0, 0.82);
+
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      width: min(480px, 100%);
+      max-height: 90vh;
+
+      overflow-y: auto;
+
+      padding: 24px;
+
+      background: #0d111a;
+
+      border: 1px solid var(--border);
+      border-radius: 16px;
+
+      box-shadow: 0 30px 80px rgba(0,0,0,0.85);
+
+      animation: modalIn 0.25s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-family: "Syne", sans-serif;
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .close {
+      width: 34px;
+      height: 34px;
+
+      display: grid;
+      place-items: center;
+
+      color: var(--muted);
+      background: transparent;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      font-size: 1.2rem;
+
+      transition: 0.2s ease;
+    }
+
+    .close:hover {
+      color: white;
+      border-color: var(--cyan);
+    }
+
+    /* =========================================
+       CART ITEMS
+    ========================================= */
+
+    .cart-items {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+
+      padding: 11px;
+
+      background: rgba(255,255,255,0.025);
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+    }
+
+    .cart-item-info {
+      min-width: 0;
+    }
+
+    .cart-item-code {
+      color: var(--cyan);
+
+      font-family: "Space Mono", monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
+    .cart-item-name {
+      margin-top: 3px;
+
+      color: white;
+
+      font-size: 0.78rem;
+      font-weight: 600;
+
+      line-height: 1.3;
+    }
+
+    .cart-item-price {
+      color: var(--cyan);
+
+      font-family: "Space Mono", monospace;
+      font-size: 0.75rem;
+      font-weight: 700;
+
+      white-space: nowrap;
+    }
+
+    .remove-item {
+      margin-left: 7px;
+
+      color: var(--muted);
+      background: transparent;
+
+      border: 0;
+
+      font-size: 0.7rem;
+    }
+
+    .remove-item:hover {
+      color: var(--pink);
+    }
+
+    .cart-empty {
+      padding: 25px;
+
+      color: var(--muted);
+
+      text-align: center;
+
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+    }
+
+    .cart-total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin: 18px 0;
+
+      padding-top: 16px;
+
+      border-top: 1px solid var(--border);
+    }
+
+    .cart-total-label {
+      color: var(--muted);
+
+      font-family: "Space Mono", monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+    }
+
+    .cart-total-value {
+      color: var(--cyan);
+
+      font-family: "Space Mono", monospace;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    /* =========================================
+       FORM
+    ========================================= */
+
+    .form-group {
+      margin-bottom: 13px;
+    }
+
+    .form-group label {
+      display: block;
+
+      margin-bottom: 6px;
+
+      color: var(--muted);
+
+      font-family: "Space Mono", monospace;
+      font-size: 0.62rem;
+      font-weight: 700;
+
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+
+      padding: 12px 13px;
+
+      color: white;
+      background: #05070c;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      outline: none;
+
+      font-size: 0.85rem;
+
+      resize: vertical;
+
+      transition: 0.2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.08);
+    }
+
+    .checkout {
+      width: 100%;
+
+      margin-top: 6px;
+
+      padding: 14px;
+
+      color: #000;
+      background: var(--cyan);
+
+      border: 0;
+      border-radius: 8px;
+
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+
+      text-transform: uppercase;
+
+      transition: 0.2s ease;
+    }
+
+    .checkout:hover {
+      box-shadow: 0 0 22px rgba(0, 240, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    /* =========================================
+       TOAST
+    ========================================= */
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 2000;
+
+      transform: translate(-50%, 20px);
+
+      padding: 11px 16px;
+
+      color: white;
+      background: #111827;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+
+      font-size: 0.75rem;
+      font-weight: 600;
+
+      opacity: 0;
+      pointer-events: none;
+
+      transition: 0.25s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 800px) {
+      header {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr auto;
+      }
+
+      .search {
+        width: 100%;
+      }
+
+      .category {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        padding: 13px;
+      }
+
+      .brand {
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+      }
+
+      .brand-tag {
+        font-size: 0.55rem;
+      }
+
+      nav {
+        grid-template-columns: 1fr;
+      }
+
+      .container {
+        width: calc(100% - 20px);
+        margin-top: 20px;
+      }
+
+      .top-line {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .image-wrap {
+        height: 210px;
+      }
+
+      .card-body {
+        padding: 11px;
+      }
+
+      .product-name {
+        min-height: 48px;
+        font-size: 0.8rem;
+      }
+
+      .price {
+        font-size: 0.82rem;
+      }
+
+      .add-button {
+        padding: 9px 5px;
+        font-size: 0.61rem;
+      }
+
+      .category-badge {
+        display: none;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .image-wrap {
+        height: 270px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="ambient-glow glow-top"></div>
+  <div class="ambient-glow glow-bottom"></div>
+
+  <!-- =========================================
+       HEADER
+  ========================================== -->
+
+  <header>
+
+    <a href="#" class="brand">
+      <span class="logo">JERZ24</span>
+      <span class="brand-tag">Y2K ARCHIVE</span>
+    </a>
+
+    <nav>
+
+      <input
+        type="text"
+        id="searchInput"
+        class="search"
+        placeholder="Search kit or code..."
+        autocomplete="off"
+      >
+
+      <select id="categoryFilter" class="category">
+        <option value="all">ALL KITS</option>
+        <option value="full">FULL SLEEVES — ₹599</option>
+        <option value="half">HALF SLEEVES — ₹499</option>
+        <option value="player">PLAYER EDITION — ₹2499</option>
+        <option value="special">SPECIAL EDITION — ₹799</option>
+      </select>
+
+      <button class="cart-button" id="cartButton">
+        CART [<span id="cartCount">0</span>]
+      </button>
+
+    </nav>
+
+  </header>
+
+  <!-- =========================================
+       MAIN
+  ========================================== -->
+
+  <main class="container">
+
+    <div class="top-line">
+
+      <div>
+        <h1 class="collection-title">
+          ARCHIVE KITS
+        </h1>
+
+        <p class="collection-subtitle">
+          Football shirts // curated archive
+        </p>
+      </div>
+
+      <div class="product-count" id="productCount">
+        30 KITS
+      </div>
+
+    </div>
+
+    <section
+      class="grid"
+      id="productGrid"
+    ></section>
+
+  </main>
+
+  <!-- =========================================
+       CART MODAL
+  ========================================== -->
+
+  <div
+    class="modal"
+    id="cartModal"
+  >
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <h2 class="modal-title">
+          YOUR CART
+        </h2>
+
+        <button
+          class="close"
+          id="closeCart"
+          aria-label="Close cart"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div
+        class="cart-items"
+        id="cartItems"
+      ></div>
+
+      <div
+        class="cart-total"
+        id="cartTotal"
+      >
+        <span class="cart-total-label">
+          Total
+        </span>
+
+        <span class="cart-total-value">
+          ₹0
+        </span>
+      </div>
+
+      <div class="form-group">
+
+        <label for="custName">
+          Full Name
+        </label>
+
+        <input
+          type="text"
+          id="custName"
+          placeholder="Your name"
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="custAddress">
+          Shipping Address
+        </label>
+
+        <textarea
+          id="custAddress"
+          rows="3"
+          placeholder="Complete address + pincode"
+        ></textarea>
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="custPhone">
+          Phone Number
+        </label>
+
+        <input
+          type="tel"
+          id="custPhone"
+          placeholder="10-digit mobile number"
+          maxlength="10"
+        >
+
+      </div>
+
+      <button
+        class="checkout"
+        id="checkoutButton"
+      >
+        CONFIRM ORDER →
+      </button>
+
+    </div>
+
+  </div>
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+  <script>
+
+    /* =========================================
+       PRODUCT DATABASE
+
+       ALL IMAGES ARE LOCAL.
+       They come directly from ./PICS/
+    ========================================== */
+
+    const products = [
+
+      /* FULL SLEEVES */
+
+      {
+        code: "A1",
+        name: "Kaka Milan 2006 Away",
+        category: "full",
+        price: 599,
+        image: "./PICS/Kaka Milan 2006 Away.png"
+      },
+
+      {
+        code: "A2",
+        name: "Zidane France 1998 Home",
+        category: "full",
+        price: 599,
+        image: "./PICS/Zidane France 1998 Home.png"
+      },
+
+      {
+        code: "A3",
+        name: "Yamal Barca 2026 Home",
+        category: "full",
+        price: 599,
+        image: "./PICS/Yamal Barca 2026 Home.png"
+      },
+
+      {
+        code: "A4",
+        name: "Ronaldo Real Madrid 2011",
+        category: "full",
+        price: 599,
+        image: "./PICS/Ronaldo Real Madrid 2011.png"
+      },
+
+      {
+        code: "A5",
+        name: "Rivaldo Barca 1999 Home",
+        category: "full",
+        price: 599,
+        image: "./PICS/Rivaldo Barca 1999 Home.png"
+      },
+
+      {
+        code: "A6",
+        name: "Ronaldo Juventus 2018",
+        category: "full",
+        price: 599,
+        image: "./PICS/Ronaldo Juventus 2018.png"
+      },
+
+      {
+        code: "A7",
+        name: "Ronaldo Man United 2007 Home",
+        category: "full",
+        price: 599,
+        image: "./PICS/Ronaldo Man United 2007 Home.png"
+      },
+
+      {
+        code: "A8",
+        name: "Beckham Real Madrid 2006 Away",
+        category: "full",
+        price: 599,
+        image: "./PICS/Beckham Real Madrid 2006 Away.png"
+      },
+
+      {
+        code: "A9",
+        name: "Ronaldo Real Madrid 2016 Away",
+        category: "full",
+        price: 599,
+        image: "./PICS/Ronaldo Real Madrid 2016 Away.png"
+      },
+
+      {
+        code: "A10",
+        name: "Messi Argentina 2026 World Cup",
+        category: "full",
+        price: 599,
+        image: "./PICS/Messi Argentina 2026 World Cup.png"
+      },
+
+      {
+        code: "A11",
+        name: "Spain 2026 World Cup Away",
+        category: "full",
+        price: 599,
+        image: "./PICS/Spain 2026 World Cup Away.png"
+      },
+
+
+      /* HALF SLEEVES */
+
+      {
+        code: "B1",
+        name: "France 2026 WC",
+        category: "half",
+        price: 499,
+        image: "./PICS/France 2026 WC.png"
+      },
+
+      {
+        code: "B2",
+        name: "Japan 2026 WC",
+        category: "half",
+        price: 499,
+        image: "./PICS/Japan 2026 WC.png"
+      },
+
+      {
+        code: "B3",
+        name: "Neymar 2026 WC",
+        category: "half",
+        price: 499,
+        image: "./PICS/Neymar 2026 WC.png"
+      },
+
+      {
+        code: "B4",
+        name: "Spain 2026 WC",
+        category: "half",
+        price: 499,
+        image: "./PICS/Spain 2026 WC.png"
+      },
+
+      {
+        code: "B5",
+        name: "Yamal Barca 2026",
+        category: "half",
+        price: 499,
+        image: "./PICS/Yamal Barca 2026.png"
+      },
+
+      {
+        code: "B6",
+        name: "Neymar Oversized",
+        category: "half",
+        price: 499,
+        image: "./PICS/Neymar Oversized.png"
+      },
+
+      {
+        code: "B7",
+        name: "Retro Oversized",
+        category: "half",
+        price: 499,
+        image: "./PICS/Retro Oversized.png"
+      },
+
+      {
+        code: "B8",
+        name: "Carlos Oversized",
+        category: "half",
+        price: 499,
+        image: "./PICS/Carlos Oversized.png"
+      },
+
+
+      /* PLAYER EDITIONS */
+
+      {
+        code: "C1",
+        name: "Spain 2026 Away",
+        category: "player",
+        price: 2499,
+        image: "./PICS/Spain 2026 Away.png"
+      },
+
+      {
+        code: "C2",
+        name: "Man City 2026 Home",
+        category: "player",
+        price: 2499,
+        image: "./PICS/Man City 2026 Home.png"
+      },
+
+      {
+        code: "C3",
+        name: "Argentina 2026 Away",
+        category: "player",
+        price: 2499,
+        image: "./PICS/Argentina 2026 Away.png"
+      },
+
+      {
+        code: "C4",
+        name: "Portugal Panther",
+        category: "player",
+        price: 2499,
+        image: "./PICS/Portugal Panther.png"
+      },
+
+      {
+        code: "C5",
+        name: "Portugal 2026 Away",
+        category: "player",
+        price: 2499,
+        image: "./PICS/Portugal 2026 Away.png"
+      },
+
+      {
+        code: "C6",
+        name: "Real Madrid 2026",
+        category: "player",
+        price: 2499,
+        image: "./PICS/Real Madrid 2026.png"
+      },
+
+      {
+        code: "C7",
+        name: "Portugal 2026 Home",
+        category: "player",
+        price: 2499,
+        image: "./PICS/Portugal 2026 Home.png"
+      },
+
+      {
+        code: "C8",
+        name: "Germany 2026 Home",
+        category: "player",
+        price: 2499,
+        image: "./PICS/Germany 2026 Home.png"
+      },
+
+
+      /* SPECIAL EDITIONS */
+
+      {
+        code: "D1",
+        name: "Barca 125th Anniversary",
+        category: "special",
+        price: 799,
+        image: "./PICS/Barca 125th Anniversary.png"
+      },
+
+      {
+        code: "D2",
+        name: "Mbappe France Special Edition",
+        category: "special",
+        price: 799,
+        image: "./PICS/Mbappe France Special Edition.png"
+      },
+
+      {
+        code: "D3",
+        name: "Ozil Germany Special Edition",
+        category: "special",
+        price: 799,
+        image: "./PICS/Ozil Germany Special Edition.png"
+      }
+
+    ];
+
+
+    /* =========================================
+       STATE
+    ========================================== */
+
+    let cart = [];
+
+
+    /* =========================================
+       DOM
+    ========================================== */
+
+    const productGrid =
+      document.getElementById("productGrid");
+
+    const productCount =
+      document.getElementById("productCount");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const categoryFilter =
+      document.getElementById("categoryFilter");
+
+    const cartButton =
+      document.getElementById("cartButton");
+
+    const cartCount =
+      document.getElementById("cartCount");
+
+    const cartModal =
+      document.getElementById("cartModal");
+
+    const closeCart =
+      document.getElementById("closeCart");
+
+    const cartItems =
+      document.getElementById("cartItems");
+
+    const cartTotal =
+      document.getElementById("cartTotal");
+
+    const checkoutButton =
+      document.getElementById("checkoutButton");
+
+    const toast =
+      document.getElementById("toast");
+
+
+    /* =========================================
+       TOAST
+    ========================================== */
+
+    let toastTimer;
+
+    function showToast(message) {
+
+      toast.textContent = message;
+
+      toast.classList.add("show");
+
+      clearTimeout(toastTimer);
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2200);
+
+    }
+
+
+    /* =========================================
+       CATEGORY LABEL
+    ========================================== */
+
+    function getCategoryLabel(category) {
+
+      const labels = {
+        full: "FULL SLEEVE",
+        half: "HALF SLEEVE",
+        player: "PLAYER",
+        special: "SPECIAL"
+      };
+
+      return labels[category] || category;
+
+    }
+
+
+    /* =========================================
+       RENDER PRODUCTS
+    ========================================== */
+
+    function renderProducts() {
+
+      const search =
+        searchInput.value
+          .toLowerCase()
+          .trim();
+
+      const category =
+        categoryFilter.value;
+
+      const filteredProducts =
+        products.filter(product => {
+
+          const matchesSearch =
+            product.name
+              .toLowerCase()
+              .includes(search)
+            ||
+            product.code
+              .toLowerCase()
+              .includes(search);
+
+          const matchesCategory =
+            category === "all"
+            ||
+            product.category === category;
+
+          return (
+            matchesSearch &&
+            matchesCategory
+          );
+
+        });
+
+
+      productCount.textContent =
+        `${filteredProducts.length} KIT${filteredProducts.length === 1 ? "" : "S"}`;
+
+
+      if (filteredProducts.length === 0) {
+
+        productGrid.innerHTML = `
+          <div class="empty">
+            <strong>NO KITS FOUND</strong>
+            Try another search or category.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      productGrid.innerHTML =
+        filteredProducts
+          .map(product => {
+
+            return `
+
+              <article class="card">
+
+                <div class="image-wrap">
+
+                  <span class="code-badge">
+                    // ${product.code}
+                  </span>
+
+                  <span class="category-badge">
+                    ${getCategoryLabel(product.category)}
+                  </span>
+
+                  <img
+                    class="product-image"
+                    src="${product.image}"
+                    alt="${product.name}"
+                    loading="lazy"
+                    onerror="imageError(this, '${product.code}')"
+                  >
+
+                </div>
+
+
+                <div class="card-body">
+
+                  <h2 class="product-name">
+                    ${product.name}
+                  </h2>
+
+                  <div class="card-bottom">
+
+                    <div class="price">
+                      ₹${product.price.toLocaleString("en-IN")}
+                    </div>
+
+                    <button
+                      class="add-button"
+                      onclick="addToCart('${product.code}')"
+                    >
+                      + Add to Cart
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </article>
+
+            `;
+
+          })
+          .join("");
+
+    }
+
+
+    /* =========================================
+       IMAGE ERROR
+    ========================================== */
+
+    function imageError(image, code) {
+
+      image.onerror = null;
+
+      image.style.objectFit = "contain";
+
+      image.src =
+        "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(`
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="600"
+            height="600"
+            viewBox="0 0 600 600"
+          >
+
+            <rect
+              width="600"
+              height="600"
+              fill="#090d16"
+            />
+
+            <text
+              x="300"
+              y="285"
+              text-anchor="middle"
+              fill="#00f0ff"
+              font-family="Arial"
+              font-size="28"
+              font-weight="700"
+            >
+              IMAGE NOT FOUND
+            </text>
+
+            <text
+              x="300"
+              y="325"
+              text-anchor="middle"
+              fill="#64748b"
+              font-family="Arial"
+              font-size="18"
+            >
+              ${code}
+            </text>
+
+          </svg>
+        `);
+
+    }
+
+
+    /* =========================================
+       ADD TO CART
+    ========================================== */
+
+    function addToCart(code) {
+
+      const product =
+        products.find(
+          item => item.code === code
+        );
+
+      if (!product) return;
+
+      cart.push({
+        ...product
+      });
+
+      updateCartCount();
+
+      showToast(
+        `${product.name} added to cart`
+      );
+
+    }
+
+
+    /* =========================================
+       REMOVE FROM CART
+    ========================================== */
+
+    function removeFromCart(index) {
+
+      cart.splice(index, 1);
+
+      updateCartCount();
+
+      renderCart();
+
+    }
+
+
+    /* =========================================
+       CART COUNT
+    ========================================== */
+
+    function updateCartCount() {
+
+      cartCount.textContent =
+        cart.length;
+
+    }
+
+
+    /* =========================================
+       RENDER CART
+    ========================================== */
+
+    function renderCart() {
+
+      if (cart.length === 0) {
+
+        cartItems.innerHTML = `
+          <div class="cart-empty">
+            Your cart is empty.
+          </div>
+        `;
+
+        cartTotal.innerHTML = `
+          <span class="cart-total-label">
+            Total
+          </span>
+
+          <span class="cart-total-value">
+            ₹0
+          </span>
+        `;
+
+        return;
+
+      }
+
+
+      cartItems.innerHTML =
+        cart
+          .map((item, index) => {
+
+            return `
+
+              <div class="cart-item">
+
+                <div class="cart-item-info">
+
+                  <div class="cart-item-code">
+                    [${item.code}]
+                  </div>
+
+                  <div class="cart-item-name">
+                    ${item.name}
+                  </div>
+
+                </div>
+
+                <div>
+
+                  <span class="cart-item-price">
+                    ₹${item.price.toLocaleString("en-IN")}
+                  </span>
+
+                  <button
+                    class="remove-item"
+                    onclick="removeFromCart(${index})"
+                  >
+                    REMOVE
+                  </button>
+
+                </div>
+
+              </div>
+
+            `;
+
+          })
+          .join("");
+
+
+      const total =
+        cart.reduce(
+          (sum, item) =>
+            sum + item.price,
+          0
+        );
+
+
+      cartTotal.innerHTML = `
+
+        <span class="cart-total-label">
+          Total
+        </span>
+
+        <span class="cart-total-value">
+          ₹${total.toLocaleString("en-IN")}
+        </span>
+
+      `;
+
+    }
+
+
+    /* =========================================
+       OPEN CART
+    ========================================== */
+
+    function openCart() {
+
+      renderCart();
+
+      cartModal.classList.add("active");
+
+      document.body.style.overflow = "hidden";
+
+    }
+
+
+    /* =========================================
+       CLOSE CART
+    ========================================== */
+
+    function closeCartModal() {
+
+      cartModal.classList.remove("active");
+
+      document.body.style.overflow = "";
+
+    }
+
+
+    /* =========================================
+       CHECKOUT
+    ========================================== */
+
+    function processCheckout() {
+
+      const name =
+        document
+          .getElementById("custName")
+          .value
+          .trim();
+
+      const address =
+        document
+          .getElementById("custAddress")
+          .value
+          .trim();
+
+      const phone =
+        document
+          .getElementById("custPhone")
+          .value
+          .trim();
+
+
+      if (cart.length === 0) {
+
+        showToast(
+          "Your cart is empty."
+        );
+
+        return;
+
+      }
+
+
+      if (!name || !address || !phone) {
+
+        showToast(
+          "Please fill in all details."
+        );
+
+        return;
+
+      }
+
+
+      if (!/^[0-9]{10}$/.test(phone)) {
+
+        showToast(
+          "Enter a valid 10-digit phone number."
+        );
+
+        return;
+
+      }
+
+
+      let total = 0;
+
+      let orderSummary =
+        "JERZ24 // ORDER\n";
+
+      orderSummary +=
+        "====================\n";
+
+      orderSummary +=
+        `Name: ${name}\n`;
+
+      orderSummary +=
+        `Phone: ${phone}\n`;
+
+      orderSummary +=
+        `Address: ${address}\n`;
+
+      orderSummary +=
+        "====================\n";
+
+      orderSummary +=
+        "ITEMS\n";
+
+
+      cart.forEach((item, index) => {
+
+        orderSummary +=
+          `${index + 1}. [${item.code}] ${item.name} — ₹${item.price}\n`;
+
+        total += item.price;
+
+      });
+
+
+      orderSummary +=
+        "====================\n";
+
+      orderSummary +=
+        `TOTAL: ₹${total}\n`;
+
+      orderSummary +=
+        "====================";
+
+
+      navigator.clipboard
+        .writeText(orderSummary)
+        .then(() => {
+
+          showToast(
+            "Order copied — paste it into Instagram DM: @sh.4qg"
+          );
+
+          cart = [];
+
+          updateCartCount();
+
+          renderCart();
+
+          document
+            .getElementById("custName")
+            .value = "";
+
+          document
+            .getElementById("custAddress")
+            .value = "";
+
+          document
+            .getElementById("custPhone")
+            .value = "";
+
+          setTimeout(() => {
+            closeCartModal();
+          }, 9000);
+
+        })
+        .catch(() => {
+
+          alert(
+            "ORDER SUMMARY\n\n" +
+            orderSummary
+          );
+
+        });
+
+    }
+
+
+    /* =========================================
+       EVENTS
+    ========================================== */
+
+    searchInput.addEventListener(
+      "input",
+      renderProducts
+    );
+
+    categoryFilter.addEventListener(
+      "change",
+      renderProducts
+    );
+
+    cartButton.addEventListener(
+      "click",
+      openCart
+    );
+
+    closeCart.addEventListener(
+      "click",
+      closeCartModal
+    );
+
+    checkoutButton.addEventListener(
+      "click",
+      processCheckout
+    );
+
+
+    /* Close modal when clicking outside */
+
+    cartModal.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target === cartModal
+        ) {
+          closeCartModal();
+        }
+
+      }
+    );
+
+
+    /* Escape key */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape" &&
+          cartModal.classList.contains("active")
+        ) {
+          closeCartModal();
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       INITIAL RENDER
+    ========================================== */
+
+    renderProducts();
+
+  </script>
+
+</body>
+</html>
