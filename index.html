@@ -2160,5 +2160,220 @@
 
   </script>
 
+<!-- ============================= -->
+<!-- JERZ24 ANALYTICS TRACKER      -->
+<!-- ============================= -->
+
+<script>
+(() => {
+    "use strict";
+
+    const API =
+        "https://jerz24-analytics-api.kundushibam333.workers.dev";
+
+    /* -----------------------------
+       IDENTIFIERS
+    ----------------------------- */
+
+    let visitorId = localStorage.getItem("jerz24_visitor_id");
+
+    if (!visitorId) {
+        visitorId =
+            crypto.randomUUID
+                ? crypto.randomUUID()
+                : "v_" + Date.now() + "_" + Math.random();
+
+        localStorage.setItem("jerz24_visitor_id", visitorId);
+    }
+
+    let sessionId = sessionStorage.getItem("jerz24_session_id");
+
+    if (!sessionId) {
+        sessionId =
+            crypto.randomUUID
+                ? crypto.randomUUID()
+                : "s_" + Date.now() + "_" + Math.random();
+
+        sessionStorage.setItem("jerz24_session_id", sessionId);
+    }
+
+    /* -----------------------------
+       DEVICE
+    ----------------------------- */
+
+    function getDevice() {
+        const width = window.innerWidth;
+
+        if (width <= 768) return "mobile";
+        if (width <= 1024) return "tablet";
+
+        return "desktop";
+    }
+
+    /* -----------------------------
+       SEND EVENT
+    ----------------------------- */
+
+    function track(eventName, extra = {}) {
+
+        const payload = {
+            event: eventName,
+            timestamp: Date.now(),
+
+            visitor_id: visitorId,
+            session_id: sessionId,
+
+            page: window.location.pathname,
+
+            device: getDevice(),
+
+            referrer: document.referrer || "",
+
+            ...extra
+        };
+
+        fetch(API + "/track", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(payload),
+
+            keepalive: true
+        }).catch(() => {
+            // Tracking failure should NEVER break the website.
+        });
+    }
+
+    /* -----------------------------
+       PAGE VIEW
+    ----------------------------- */
+
+    track("page_view");
+
+    /* -----------------------------
+       INSTAGRAM TRAFFIC
+    ----------------------------- */
+
+    const referrer = document.referrer.toLowerCase();
+
+    if (
+        referrer.includes("instagram.com") ||
+        referrer.includes("l.instagram.com")
+    ) {
+        track("instagram_visit");
+    }
+
+    /* -----------------------------
+       BUY NOW CLICKS
+    ----------------------------- */
+
+    document.addEventListener("click", (event) => {
+
+        const target = event.target.closest(
+            "a, button"
+        );
+
+        if (!target) return;
+
+        const text =
+            (target.innerText || target.textContent || "")
+                .trim()
+                .toLowerCase();
+
+        const href =
+            target.getAttribute("href") || "";
+
+        if (
+            text.includes("buy now") ||
+            text.includes("buy") ||
+            target.dataset.analytics === "buy-now"
+        ) {
+            track("buy_now_click", {
+                element: text.slice(0, 100),
+                href: href
+            });
+        }
+    });
+
+    /* -----------------------------
+       ENGAGEMENT
+    ----------------------------- */
+
+    let engaged = false;
+
+    function engagement() {
+
+        if (engaged) return;
+
+        engaged = true;
+
+        track("engagement");
+    }
+
+    window.addEventListener("scroll", () => {
+
+        if (window.scrollY > 150) {
+            engagement();
+        }
+
+    }, { passive: true });
+
+    document.addEventListener("click", engagement);
+
+    /* -----------------------------
+       TIME / DURATION
+    ----------------------------- */
+
+    const startedAt = Date.now();
+
+    let durationSent = false;
+
+    function sendDuration() {
+
+        if (durationSent) return;
+
+        durationSent = true;
+
+        const seconds =
+            Math.round((Date.now() - startedAt) / 1000);
+
+        track("duration", {
+            duration_seconds: seconds
+        });
+    }
+
+    window.addEventListener(
+        "beforeunload",
+        sendDuration
+    );
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (document.visibilityState === "hidden") {
+                sendDuration();
+            }
+
+        }
+    );
+
+    /* -----------------------------
+       LIVE USER HEARTBEAT
+    ----------------------------- */
+
+    function heartbeat() {
+
+        track("heartbeat");
+
+    }
+
+    setInterval(heartbeat, 60 * 1000);
+
+})();
+</script>
 </body>
 </html>
