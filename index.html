@@ -1,35 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DK04VFVT54"></script>
 
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-
-  gtag('js', new Date());
-
-  gtag('config', 'G-DK04VFVT54', {
-    send_page_view: true
-  });
-</script>
-  <head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK04VFTS4"></script>
+  <!-- =========================================
+       JERZ24 GA4 ANALYTICS
+       Measurement ID: G-DK04VFVTS4
+  ========================================== -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DK04VFVTS4"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
-    gtag('config', 'G-DK04VFTS4');
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag("js", new Date());
+
+    gtag("config", "G-DK04VFVTS4", {
+      send_page_view: true
+    });
+
+    // Track visits arriving from Instagram.
+    const jerzUrlParams = new URLSearchParams(window.location.search);
+    const jerzSource = (jerzUrlParams.get("utm_source") || "").toLowerCase();
+
+    if (jerzSource === "instagram" || jerzSource === "ig") {
+      gtag("event", "instagram_visit", {
+        source: jerzSource,
+        medium: jerzUrlParams.get("utm_medium") || "social",
+        campaign: jerzUrlParams.get("utm_campaign") || "unknown"
+      });
+    }
   </script>
 
-  <!-- your existing stuff -->
-</head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -1928,7 +1931,23 @@
       }
 
 
-      let total = 0;
+      let total = cart.reduce(
+        (sum, item) => sum + item.price,
+        0
+      );
+
+      // GA4: the customer has submitted valid checkout details.
+      gtag("event", "begin_checkout", {
+        currency: "INR",
+        value: total,
+        items: cart.map(item => ({
+          item_id: item.code,
+          item_name: item.name,
+          item_category: item.category,
+          price: item.price,
+          quantity: 1
+        }))
+      });
 
       let orderSummary =
         "JERZ24 // ORDER\n";
@@ -1957,7 +1976,7 @@
         orderSummary +=
           `${index + 1}. [${item.code}] ${item.name} — ₹${item.price}\n`;
 
-        total += item.price;
+        // total was calculated above for analytics + order summary.
 
       });
 
@@ -1975,6 +1994,24 @@
       navigator.clipboard
         .writeText(orderSummary)
         .then(() => {
+
+          gtag("event", "order_intent", {
+            currency: "INR",
+            value: total,
+            items: cart.map(item => ({
+              item_id: item.code,
+              item_name: item.name,
+              item_category: item.category,
+              price: item.price,
+              quantity: 1
+            })),
+            contact_method: "instagram_dm"
+          });
+
+          gtag("event", "instagram_order_intent", {
+            value: total,
+            currency: "INR"
+          });
 
           showToast(
             "Order copied — paste it into Instagram DM: @sh.4qg"
@@ -2019,14 +2056,36 @@
        EVENTS
     ========================================== */
 
+    let searchAnalyticsTimer;
+
     searchInput.addEventListener(
       "input",
-      renderProducts
+      () => {
+        renderProducts();
+
+        clearTimeout(searchAnalyticsTimer);
+
+        const query = searchInput.value.trim();
+
+        if (!query) return;
+
+        searchAnalyticsTimer = setTimeout(() => {
+          gtag("event", "site_search", {
+            search_term: query
+          });
+        }, 700);
+      }
     );
 
     categoryFilter.addEventListener(
       "change",
-      renderProducts
+      () => {
+        renderProducts();
+
+        gtag("event", "filter_kits", {
+          kit_category: categoryFilter.value
+        });
+      }
     );
 
     cartButton.addEventListener(
@@ -2077,6 +2136,21 @@
       }
     );
 
+
+    // Catch any Instagram links/buttons added to the site later.
+    document.addEventListener("click", event => {
+      const link = event.target.closest("a");
+
+      if (!link) return;
+
+      const href = link.href || "";
+
+      if (href.includes("instagram.com")) {
+        gtag("event", "instagram_click", {
+          link_url: href
+        });
+      }
+    });
 
     /* =========================================
        INITIAL RENDER
